@@ -1,0 +1,109 @@
+# 📚 Course Search Service
+
+A Spring Boot + Elasticsearch-based microservice that provides full-text search, filtering, sorting, pagination, and fuzzy/autocomplete support for online/offline educational courses.
+
+---
+
+## 🚀 How to Run This Project
+
+1. Launch Elasticsearch via Docker
+
+Ensure Docker is installed and running, then start Elasticsearch using:
+
+```bash
+docker-compose up -d
+
+##Make sure port 9200 is free. Modify docker-compose.yml if needed.
+
+2. Build & Run Spring Boot App
+
+./gradlew clean build
+./gradlew bootRun
+
+The app will be available at: http://localhost:8080
+
+3. Populate Elasticsearch Index
+
+curl -X POST http://localhost:8080/courses/index
+
+4.Sample Data Indexing
+Populate the index with sample data:
+
+curl -X POST http://localhost:8080/courses/index
+
+4.Search API Usage
+
+Endpoint:
+
+GET /courses/search
+
+Example Request:
+
+curl -X GET "http://localhost:8080/courses/search?q=math&category=Science&type=Online&minAge=10&maxAge=16&minPrice=500&maxPrice=1500&startDate=2024-01-01&page=0&size=5&sortBy=price&sortOrder=asc"
+
+Parameters:
+
+| Name      | Type    | Description                           |
+| --------- | ------- | ------------------------------------- |
+| q         | String  | Full-text search on title/description |
+| category  | String  | Filter by course category             |
+| type      | String  | Filter by course type (e.g., Online)  |
+| minAge    | Integer | Minimum student age                   |
+| maxAge    | Integer | Maximum student age                   |
+| minPrice  | Double  | Minimum course price                  |
+| maxPrice  | Double  | Maximum course price                  |
+| startDate | Date    | Start date (yyyy-MM-dd)               |
+| page      | Integer | Page number (0-based)                 |
+| size      | Integer | Results per page                      |
+| sortBy    | String  | Field to sort by (e.g., price)        |
+| sortOrder | String  | `asc` or `desc`                       |
+
+5.Autocomplete (Bonus)
+
+Endpoint:
+GET /courses/autocomplete
+
+Example:
+curl -X GET "http://localhost:8080/courses/autocomplete?prefix=mat"
+
+6.Fuzzy Search (Bonus)
+
+Endpoint:
+GET /courses/fuzzy
+
+Example:
+curl -X GET "http://localhost:8080/courses/fuzzy?term=phyics"
+
+7.Run Tests
+
+Run unit or integration tests:
+./gradlew test
+
+8.Project Structure
+
+src/main/java/com/undoschool/coursesearch
+├── config         → Elasticsearch config
+├── controller     → REST API endpoints
+├── document       → Elasticsearch document mapping (CourseDocument)
+├── repository     → Spring Data Elasticsearch repository
+├── service        → Business/search logic
+
+9. Tech Stack
+
+Spring Boot 3.2.5
+Spring Data Elasticsearch
+Elasticsearch 7.17.17
+Docker & Docker Compose
+Gradle
+JUnit (for tests)
+
+10.Author
+ 
+Vishnu Sakaray
+🔗 GitHub | ✉️ vishnusakaray@gmail.com
+
+
+
+
+
+
